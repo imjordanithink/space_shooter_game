@@ -5,7 +5,7 @@ import random
 pygame.font.init()
 #creation of pygame window. set width and height as well as name for window
 #initialization of fonts in this program. Python requires that the font is INITIALIZED at the top of the file.
-WIDTH, HEIGHT = 750, 750
+WIDTH, HEIGHT = 1000, 750
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Space Shooter")
 
@@ -161,10 +161,12 @@ def collide(obj1, obj2):
 #when working in pygame, you have to set up whats called a MAIN LOOP which is reponsible for drawing things on the screen, collisions, quitting the game etc
 def main():
     pygame.mixer.init()
+    
     run = True
     FPS = 60
     level = 0
     lives = 5
+    handle_font = pygame.font.SysFont("arial", 10)
     main_font = pygame.font.SysFont("arial", 50)
     lost_font = pygame.font.SysFont("arial", 60)
 
@@ -181,14 +183,18 @@ def main():
 
     lost = False
     lost_count = 0
+
     # redraw_window() draws the Lives, Level, draws every Enemy that exists within the Enemies list and checks to see if the Lost value changes to true, it then updates the display. It does all of this 60 times per second because
     # a frame rate.
     def redraw_window():
+        
         WIN.blit(BG, (0,0))
         # draw text
         lives_label = main_font.render(f"Lives: {lives}", 1, (0, 180, 30))
         level_label = main_font.render(f"Level: {level}", 1, (255,255,255))
-
+        handle = handle_font.render("insta: senko.jm", 1, (255, 255, 255))
+        
+        WIN.blit(handle, (10, 730))
         WIN.blit(lives_label, (10, 10))
         WIN.blit(level_label, (WIDTH - level_label.get_width() - 10, 10))
 
@@ -206,6 +212,7 @@ def main():
     while run:
         clock.tick(FPS)
         redraw_window()
+        
        
 	# if the players lives is less than zero (death) or player health is less than zero (death), change lost value to True as well as increase lost_count by one.
         if lives <= 0 or player.health <= 0:
@@ -245,6 +252,7 @@ def main():
         if keys[pygame.K_SPACE]:
             player.shoot()
             player.laser_shot()
+            
 
             
             
